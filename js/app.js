@@ -80,6 +80,9 @@ function loadFeed(id, cb) {
     });
 }
 
+var addFeed = function(){};
+var removeFeed = function(){};
+
 /* Google API: Loads the Feed Reader API and defines what function
  * to call when the Feed Reader API is done loading.
  */
