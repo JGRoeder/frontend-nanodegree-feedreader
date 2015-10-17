@@ -119,4 +119,52 @@ $(function() {
 
     });
 
+    describe('Remove Feed', function(){
+
+      it('should remove a single feed from the feed list',function(){
+        var listLength = allFeeds.length;
+        var oldFeed = allFeeds[3];
+
+        removeFeed(3);
+
+        expect(allFeeds.length).toBe(listLength - 1);
+        expect(allFeeds[3].name).not.toBe(oldFeed.name);
+        expect(allFeeds[3].url).not.toBe(oldFeed.url);
+      });
+
+      it('should return a removed feed', function(){
+        var oldFeed = allFeeds[3];
+
+        var returned = removeFeed(3);
+
+        expect(returned.name).toBe(oldFeed.name);
+        epect(returned.url).toBe(oldFeed.url);
+      });
+
+      it('should remove multiple feeds from the feed list', function(){
+        var listLength = allFeeds.length;
+        var toRemove = [1,4,9];
+        var cachedFeeds = [];
+
+        // cache the feeds we wish to remove to compare values later.
+        toRemove.forEach(function(value){
+          cachedFeeds.push(allFeeds[value]);
+        });
+
+        removeFeed(toRemove);
+
+        expect(allFeeds.length).toBe(listLength - toRemove.length);
+
+        // nested forEach but we're controlling the size of one input
+        // so I think its probably fine.
+        allFeeds.forEach(function(feed){
+          cachedFeeds.forEach(function(cachedFeed){
+            expect(feed.name).not.toBe(cachedFeed.name);
+            expect(feed.url).not.toBe(cachedFeed.url);
+          });
+        });
+      });
+
+    });
+
 }());
