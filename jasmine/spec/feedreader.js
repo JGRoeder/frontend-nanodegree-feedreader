@@ -94,4 +94,29 @@ $(function() {
       });
     });
 
+    describe('Add New Feed', function(){
+
+      it('should add new feed(s) to the feed list', function(){
+        var listLength = allFeeds.length;
+
+        addFeed('New Feed Name', 'http://notrealfeeds.com/rss');
+
+        expect(allFeeds.length).toBe(listLength + 1);
+        expect(allFeeds[allFeeds.length - 1].name).toBe('New Feed Name');
+        expect(allFeeds[allFeeds.length - 1].url).toBe('http://notrealfeeds.com/rss');
+      });
+
+      it('should not allow duplicates to be added', function(){
+        var listLength = allFeeds.length;
+
+        addFeed('Superb Sprockets', 'http://spacelysprockets.com/rss');
+        addFeed('Superb Sprockets', 'http://spacelysprockets.com/rss');
+
+        expect(allFeeds.length).toBe(listLength + 1);
+        expect(allFeeds[allFeeds.length - 1].name).not.toBe(allFeeds[allFeeds.length - 2].name);
+        expect(allFeeds[allFeeds.length - 1].url).not.toBe(allFeeds[allFeeds.length - 2].url);
+      });
+
+    });
+
 }());
